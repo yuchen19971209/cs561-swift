@@ -3,9 +3,16 @@ import Alamofire
 public protocol WeatherService {
     func getTemperature() async throws -> Int
 }
+enum BaseUrl:String{
+    case openweathermap = "https://api.openweathermap.org"
+    case mockServer = "https://raw.githubusercontent.com/yuchen19971209/StaticWeb/main/data/2.5/weather.json?"
+}
+let apiKey = "7994280b9a2ba36353c3aa02f649d537"
 
 class WeatherServiceImpl: WeatherService {
-    let url = "https://api.openweathermap.org/data/2.5/weather?q=corvallis&units=imperial&appid=<INSERT YOUR API KEY HERE>"
+    //let url = "https://api.openweathermap.org/data/2.5/weather?q=corvallis&units=imperial&appid=\(apiKey)"
+    let url = "\(BaseUrl.openweathermap.rawValue)/data/2.5/weather?q=corvallis&units=imperial&appid=\(apiKey)"
+    //let url = "\(BaseUrl.mockServer.rawValue)"
 
     func getTemperature() async throws -> Int {
         return try await withCheckedThrowingContinuation { continuation in
@@ -24,7 +31,7 @@ class WeatherServiceImpl: WeatherService {
     }
 }
 
-private struct Weather: Decodable {
+struct Weather: Decodable {
     let main: Main
 
     struct Main: Decodable {
