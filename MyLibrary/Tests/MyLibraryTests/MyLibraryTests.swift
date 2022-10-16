@@ -71,6 +71,7 @@ final class MyLibraryTests: XCTestCase {
 
     //Unit test and test Weather
     func testWeatherModel() async {
+        //Given
         //Json hard code
         let jsonContent = """
         {
@@ -125,22 +126,29 @@ final class MyLibraryTests: XCTestCase {
         // Create a JSON Decoder object.
         let decoder = JSONDecoder()
 
+        //When
         // Decode the JSON data using the APOD struct we created that follows this data's structure.
         let myData = try! decoder.decode(Weather.self, from: jsonData)
         print(myData.main.temp)
         
+        //Then
         //XCTAssertNotNil(testData) and check whether it is same as the hard code
         XCTAssert(myData.main.temp == 81.81)
     }
 
     //Integration Test
     func testWeatherModelIntegration() async {
+        //Given
         let weatherService = WeatherServiceImpl()
+
+        //When
         var temperature = 0
         do {
             temperature = try await weatherService.getTemperature()
             print(temperature)
         } catch {}
+
+        //Then
         XCTAssertNotNil(temperature)
     }
 
