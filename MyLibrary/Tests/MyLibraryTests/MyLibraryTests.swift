@@ -144,7 +144,7 @@ final class MyLibraryTests: XCTestCase {
         //When
         var temperature = 0
         do {
-            temperature = try await weatherService.getTemperature()
+            temperature = try await weatherService.getTemperature()!
             print(temperature)
         } catch {}
 
